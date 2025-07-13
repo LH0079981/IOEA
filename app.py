@@ -1,15 +1,16 @@
 from flask import Flask
 from flask_cors import CORS
 
+from api.auth import auth_bp
+from api.user import user_bp
 from api.student import student_bp
 from api.teacher import teacher_bp
-from api.auth import auth_bp
 
 app = Flask(__name__)
 CORS(app)
 
-# 注册蓝图
 app.register_blueprint(auth_bp)
+app.register_blueprint(user_bp)
 app.register_blueprint(student_bp)
 app.register_blueprint(teacher_bp)
 

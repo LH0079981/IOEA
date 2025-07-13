@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import request, jsonify
 from werkzeug.security import generate_password_hash
 
 from . import auth_bp
@@ -12,7 +12,7 @@ def register():
     pwd = data.get('pwd')
 
     if not name or not pwd:
-        return jsonify({"success": 0, "error": "Missing parameters"}), 400
+        return jsonify({"success": 0, "errr": "Missing parameters"}), 400
 
     try:
         # 检查用户名是否存在

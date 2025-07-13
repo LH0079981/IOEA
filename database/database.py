@@ -5,7 +5,6 @@ from .config import MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB
 
 
 def get_db_connection():
-    """获取数据库连接"""
     return pymysql.connect(
         host=MYSQL_HOST,
         port=MYSQL_PORT,
@@ -17,7 +16,7 @@ def get_db_connection():
 
 
 def execute_query(query, params=None, fetch_one=False):
-    """执行查询并返回结果"""
+    # 执行查询并返回结果
     conn = get_db_connection()
     try:
         with conn.cursor() as cursor:
@@ -30,7 +29,7 @@ def execute_query(query, params=None, fetch_one=False):
 
 
 def execute_update(query, params=None):
-    """执行更新操作并返回影响的行数"""
+    # 执行更新操作并返回影响的行数
     conn = get_db_connection()
     try:
         with conn.cursor() as cursor:
