@@ -1,0 +1,35 @@
+from flask import request, jsonify
+
+from . import user_bp
+from database.database import execute_query, execute_update
+
+
+@user_bp.route('/update_teacherId', methods=['POST'])
+def update_teacherId():
+    data = request.get_json()
+    userId = data.get('userId')
+    teacherId = data.get('teacherId')
+
+    if not userId or not teacherId:
+        return jsonify({"success": 0, "errr": "Missing parameters"}), 400
+
+    try:
+        # 验证用户是否存在
+        user = execute_query(
+            "SELECT userId FROM user WHERE userId = %s",
+            (userId,),
+            fetch_one=True
+        )
+
+        if not user:
+            return jsonify({"success": 0, "error": "User not found"}), 404
+
+        affected_rows = execute_update(
+            "UPDATE user SET teacherId = %s WHERE userId = %s",
+            (teacherId, userId)
+        )
+
+        return jsonify({"success": 1, "message": "teacherId updated"}), 200
+
+    except Exception as e:
+        return jsonify({"success": 0, "error": str(e)}), 500

@@ -7,17 +7,17 @@ from database.database import execute_query, execute_update
 @user_bp.route('/update_name', methods=['POST'])
 def update_name():
     data = request.get_json()
-    userid = data.get('userid')
+    userId = data.get('userId')
     new_name = data.get('new_name')
 
-    if not userid or not new_name:
+    if not userId or not new_name:
         return jsonify({"success": 0, "errr": "Missing parameters"}), 400
 
     try:
         # 验证用户是否存在
         user = execute_query(
-            "SELECT userid,name,pwd FROM user WHERE userid = %s",
-            (userid,),
+            "SELECT userId,name,pwd FROM user WHERE userId = %s",
+            (userId,),
             fetch_one=True
         )
 
@@ -26,7 +26,7 @@ def update_name():
 
         # 检测用户名是否重复
         existing_user = execute_query(
-            "SELECT userid,name,pwd FROM user WHERE name = %s",
+            "SELECT userId,name,pwd FROM user WHERE name = %s",
             (new_name,),
             fetch_one=True
         )
@@ -35,8 +35,8 @@ def update_name():
             return jsonify({"success": 0, "error": "Duplicate username"}), 200
 
         affected_rows = execute_update(
-            "UPDATE user SET name = %s WHERE userid = %s",
-            (new_name, userid)
+            "UPDATE user SET name = %s WHERE userId = %s",
+            (new_name, userId)
         )
 
         return jsonify({"success": 1, "message": "Username updated"}), 200

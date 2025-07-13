@@ -8,18 +8,18 @@ from database.database import execute_query, execute_update
 @user_bp.route('/update_pwd', methods=['POST'])
 def update_pwd():
     data = request.get_json()
-    userid = data.get('userid')
+    userId = data.get('userId')
     old_pwd = data.get('old_pwd')
     new_pwd = data.get('new_pwd')
 
-    if not userid or not old_pwd or not new_pwd:
+    if not userId or not old_pwd or not new_pwd:
         return jsonify({"success": 0, "errr": "Missing parameters"}), 400
 
     try:
         # 验证用户是否存在
         user = execute_query(
-            "SELECT userid,name,pwd FROM user WHERE userid = %s",
-            (userid,),
+            "SELECT userId,name,pwd FROM user WHERE userId = %s",
+            (userId,),
             fetch_one=True
         )
 
@@ -35,8 +35,8 @@ def update_pwd():
 
         # 更新密码
         affected_rows = execute_update(
-            "UPDATE user SET pwd = %s WHERE userid = %s",
-            (new_hashed_pwd, userid)
+            "UPDATE user SET pwd = %s WHERE userId = %s",
+            (new_hashed_pwd, userId)
         )
 
         return jsonify({"success": 1, "message": "Password updated"}), 200

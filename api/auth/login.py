@@ -17,14 +17,14 @@ def login():
     try:
         # 获取用户信息
         user = execute_query(
-            "SELECT userid, pwd FROM user WHERE name = %s",
+            "SELECT userId, pwd FROM user WHERE name = %s",
             (name,),
             fetch_one=True
         )
 
         # 对比用户名和密码
         if user and check_password_hash(user['pwd'], pwd):
-            return jsonify({"success": 1, "userid": user['userid']}), 200
+            return jsonify({"success": 1, "userId": user['userId']}), 200
         elif not user:
             return jsonify({"success": 0, "error": "Username does not exist"}), 200
         else:

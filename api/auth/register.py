@@ -17,7 +17,7 @@ def register():
     try:
         # 检查用户名是否存在
         existing_user = execute_query(
-            "SELECT userid FROM user WHERE name = %s",
+            "SELECT userId FROM user WHERE name = %s",
             (name,),
             fetch_one=True
         )
@@ -36,11 +36,11 @@ def register():
 
         # 获取新用户ID
         new_user = execute_query(
-            "SELECT userid FROM user WHERE name = %s",
+            "SELECT userId FROM user WHERE name = %s",
             (name,),
             fetch_one=True
         )
-        return jsonify({"success": 1, "userid": new_user['userid']}), 201
+        return jsonify({"success": 1, "userId": new_user['userId']}), 201
 
     except Exception as e:
         return jsonify({"success": 0, "error": str(e)}), 500
