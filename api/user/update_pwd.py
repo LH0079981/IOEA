@@ -18,7 +18,7 @@ def update_pwd():
     try:
         # 验证用户是否存在
         user = execute_query(
-            "SELECT userId,name,pwd FROM user WHERE userId = %s",
+            "SELECT userId,name,pwd FROM user WHERE userId = %s AND status = 1",
             (userId,),
             fetch_one=True
         )
@@ -35,7 +35,7 @@ def update_pwd():
 
         # 更新密码
         execute_update(
-            "UPDATE user SET pwd = %s WHERE userId = %s",
+            "UPDATE user SET pwd = %s WHERE userId = %s AND status = 1",
             (new_hashed_pwd, userId)
         )
 

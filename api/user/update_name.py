@@ -16,7 +16,7 @@ def update_name():
     try:
         # 验证用户是否存在
         user = execute_query(
-            "SELECT userId,name,pwd FROM user WHERE userId = %s",
+            "SELECT userId FROM user WHERE userId = %s AND status = 1",
             (userId,),
             fetch_one=True
         )
@@ -26,7 +26,7 @@ def update_name():
 
         # 检测用户名是否重复
         existing_user = execute_query(
-            "SELECT userId,name,pwd FROM user WHERE name = %s",
+            "SELECT userId FROM user WHERE name = %s AND status = 1",
             (new_name,),
             fetch_one=True
         )
@@ -35,7 +35,7 @@ def update_name():
             return jsonify({"success": 0, "error": "Duplicate username"}), 200
 
         execute_update(
-            "UPDATE user SET name = %s WHERE userId = %s",
+            "UPDATE user SET name = %s WHERE userId = %s AND status = 1",
             (new_name, userId)
         )
 

@@ -5,6 +5,7 @@ def init_db():
     try:
         execute_update("""
             CREATE TABLE IF NOT EXISTS user (
+                status TINYINT(1) NOT NULL,
                 userId INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL UNIQUE,
                 pwd VARCHAR(255) NOT NULL,

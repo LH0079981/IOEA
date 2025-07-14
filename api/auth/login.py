@@ -17,7 +17,7 @@ def login():
     try:
         # 获取用户信息
         user = execute_query(
-            "SELECT userId, pwd,studentId,teacherId FROM user WHERE name = %s",
+            "SELECT userId, pwd, studentId, teacherId FROM user WHERE name = %s AND status = 1",
             (name,),
             fetch_one=True
         )

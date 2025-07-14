@@ -11,12 +11,12 @@ def update_studentId():
     studentId = data.get('studentId')
 
     if not userId:
-        return jsonify({"success": 0, "errr": "Missing parameters"}), 400
+        return jsonify({"success": 0, "error": "Missing parameters"}), 400
 
     try:
         # 验证用户是否存在
         user = execute_query(
-            "SELECT userId FROM user WHERE userId = %s",
+            "SELECT userId FROM user WHERE userId = %s AND status = 1",
             (userId,),
             fetch_one=True
         )
@@ -25,7 +25,7 @@ def update_studentId():
             return jsonify({"success": 0, "error": "User not found"}), 404
 
         execute_update(
-            "UPDATE user SET studentId = %s WHERE userId = %s",
+            "UPDATE user SET studentId = %s WHERE userId = %s AND status = 1",
             (studentId, userId)
         )
 
