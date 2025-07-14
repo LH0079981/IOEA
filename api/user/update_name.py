@@ -11,7 +11,7 @@ def update_name():
     new_name = data.get('new_name')
 
     if not userId or not new_name:
-        return jsonify({"success": 0, "errr": "Missing parameters"}), 400
+        return jsonify({"success": 0, "error": "Missing parameters"}), 400
 
     try:
         # 验证用户是否存在
@@ -34,7 +34,7 @@ def update_name():
         if existing_user:
             return jsonify({"success": 0, "error": "Duplicate username"}), 200
 
-        affected_rows = execute_update(
+        execute_update(
             "UPDATE user SET name = %s WHERE userId = %s",
             (new_name, userId)
         )

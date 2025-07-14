@@ -9,9 +9,10 @@ def update_studentId():
     data = request.get_json()
     userId = data.get('userId')
     studentId = data.get('studentId')
+    print(data)
 
     if not userId or not studentId:
-        return jsonify({"success": 0, "errr": "Missing parameters"}), 400
+        return jsonify({"success": 0, "error": "Missing parameters"}), 400
 
     try:
         # 验证用户是否存在
@@ -24,7 +25,7 @@ def update_studentId():
         if not user:
             return jsonify({"success": 0, "error": "User not found"}), 404
 
-        affected_rows = execute_update(
+        execute_update(
             "UPDATE user SET studentId = %s WHERE userId = %s",
             (studentId, userId)
         )

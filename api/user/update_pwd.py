@@ -13,7 +13,7 @@ def update_pwd():
     new_pwd = data.get('new_pwd')
 
     if not userId or not old_pwd or not new_pwd:
-        return jsonify({"success": 0, "errr": "Missing parameters"}), 400
+        return jsonify({"success": 0, "error": "Missing parameters"}), 400
 
     try:
         # 验证用户是否存在
@@ -34,7 +34,7 @@ def update_pwd():
         new_hashed_pwd = generate_password_hash(new_pwd)
 
         # 更新密码
-        affected_rows = execute_update(
+        execute_update(
             "UPDATE user SET pwd = %s WHERE userId = %s",
             (new_hashed_pwd, userId)
         )

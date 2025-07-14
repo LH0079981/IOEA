@@ -4,13 +4,12 @@ from . import user_bp
 from database.database import execute_query, execute_update
 
 
-@user_bp.route('/update_teacherId', methods=['POST'])
-def update_teacherId():
+@user_bp.route('/unbind_teacherId', methods=['POST'])
+def unbind_teacherId():
     data = request.get_json()
     userId = data.get('userId')
-    teacherId = data.get('teacherId')
 
-    if not userId or not teacherId:
+    if not userId:
         return jsonify({"success": 0, "error": "Missing parameters"}), 400
 
     try:
@@ -25,11 +24,11 @@ def update_teacherId():
             return jsonify({"success": 0, "error": "User not found"}), 404
 
         execute_update(
-            "UPDATE user SET teacherId = %s WHERE userId = %s",
-            (teacherId, userId)
+            "UPDATE user SET teacherId = NULL WHERE userId = %s",
+            (userId,)
         )
 
-        return jsonify({"success": 1, "message": "teacherId updated"}), 200
+        return jsonify({"success": 1, "message": "teacherId unbind"}), 200
 
     except Exception as e:
         return jsonify({"success": 0, "error": str(e)}), 500
