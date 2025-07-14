@@ -10,7 +10,7 @@ def update_teacherId():
     userId = data.get('userId')
     teacherId = data.get('teacherId')
 
-    if not userId or not teacherId:
+    if not userId:
         return jsonify({"success": 0, "error": "Missing parameters"}), 400
 
     try:
@@ -29,7 +29,10 @@ def update_teacherId():
             (teacherId, userId)
         )
 
-        return jsonify({"success": 1, "message": "teacherId updated"}), 200
+        if teacherId:
+            return jsonify({"success": 1, "message": "teacherId updated"}), 200
+        else:
+            return jsonify({"success": 1, "message": "teacherId unbind"}), 200
 
     except Exception as e:
         return jsonify({"success": 0, "error": str(e)}), 500

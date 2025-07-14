@@ -9,10 +9,9 @@ def update_studentId():
     data = request.get_json()
     userId = data.get('userId')
     studentId = data.get('studentId')
-    print(data)
 
-    if not userId or not studentId:
-        return jsonify({"success": 0, "error": "Missing parameters"}), 400
+    if not userId:
+        return jsonify({"success": 0, "errr": "Missing parameters"}), 400
 
     try:
         # 验证用户是否存在
@@ -30,7 +29,10 @@ def update_studentId():
             (studentId, userId)
         )
 
-        return jsonify({"success": 1, "message": "studentId updated"}), 200
+        if studentId:
+            return jsonify({"success": 1, "message": "studentId updated"}), 200
+        else:
+            return jsonify({"success": 1, "message": "studentId unbind"}), 200
 
     except Exception as e:
         return jsonify({"success": 0, "error": str(e)}), 500
