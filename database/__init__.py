@@ -6,12 +6,12 @@ def init_db():
         execute_update("""
             CREATE TABLE IF NOT EXISTS user (
                 userId INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR NOT NULL UNIQUE,
-                pwd VARCHAR NOT NULL,
+                name VARCHAR(255) NOT NULL UNIQUE,
+                pwd VARCHAR(255) NOT NULL,
                 studentId INT,
                 teacherId INT
             )
         """)
-        print("Database initialized successfully")
+        # print("Database initialized successfully")
     except Exception as e:
         print(f"Database initialization failed: {str(e)}")
